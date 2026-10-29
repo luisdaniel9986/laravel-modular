@@ -13,7 +13,7 @@ use DanielAlva\Modular\Commands\MakeMigrationCommand;
 class ModularServiceProvider extends ServiceProvider
 {
     /**
-     * Registrar servicios y configuración del paquete.
+     * Register services and package configuration.
      */
     public function register(): void
     {
@@ -21,17 +21,15 @@ class ModularServiceProvider extends ServiceProvider
     }
 
     /**
-     * Inicializar servicios y componentes de los módulos.
+     * Bootstrap package services, commands and auto-discover modules.
      */
     public function boot(): void
     {
-        // Publicar configuración
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/Config/modular.php' => config_path('modular.php'),
             ], 'modular-config');
 
-            // Registrar comandos Artisan
             $this->commands([
                 MakeModuleCommand::class,
                 MakeControllerCommand::class,
@@ -40,12 +38,11 @@ class ModularServiceProvider extends ServiceProvider
             ]);
         }
 
-        // Descubrir y cargar todos los módulos existentes
         $this->loadModules();
     }
 
     /**
-     * Escanear el directorio de módulos y registrar rutas, vistas y migraciones.
+     * Scan the modules directory and register routes, views, and migrations.
      */
     protected function loadModules(): void
     {
@@ -64,7 +61,7 @@ class ModularServiceProvider extends ServiceProvider
     }
 
     /**
-     * Cargar los componentes individuales de un módulo específico.
+     * Boot individual module components.
      */
     protected function bootModule(string $moduleName, string $modulePath): void
     {
@@ -74,7 +71,7 @@ class ModularServiceProvider extends ServiceProvider
             'views'      => true,
         ]);
 
-        // 1. Cargar Rutas (Web y API)
+        // 1. Load Routes (Web & API)
         if ($autoLoad['routes'] ?? true) {
             $webRoutes = $modulePath . '/Routes/web.php';
             if (File::exists($webRoutes)) {
@@ -90,7 +87,7 @@ class ModularServiceProvider extends ServiceProvider
             }
         }
 
-        // 2. Cargar Migraciones
+        // 2. Load Migrations
         if ($autoLoad['migrations'] ?? true) {
             $migrationsPath = $modulePath . '/Migrations';
             if (File::isDirectory($migrationsPath)) {
@@ -98,7 +95,7 @@ class ModularServiceProvider extends ServiceProvider
             }
         }
 
-        // 3. Cargar Vistas Blade (ejemplo: view('productos::index'))
+        // 3. Load Blade Views
         if ($autoLoad['views'] ?? true) {
             $viewsPath = $modulePath . '/Views';
             if (File::isDirectory($viewsPath)) {

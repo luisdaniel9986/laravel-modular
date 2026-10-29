@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 
 class MakeControllerCommand extends Command
 {
-    protected $signature = 'module:controller {module : Nombre del módulo} {name : Nombre del controlador}';
-    protected $description = 'Crea un controlador dentro de un módulo específico';
+    protected $signature = 'module:controller {module : Module name} {name : Controller name}';
+    protected $description = 'Create a new controller inside a specific module';
 
     public function handle(): int
     {
@@ -21,7 +21,7 @@ class MakeControllerCommand extends Command
         $targetDir = $modulesDir . '/' . $module . '/Controllers';
 
         if (!File::isDirectory($modulesDir . '/' . $module)) {
-            $this->error("❌ El módulo [{$module}] no existe.");
+            $this->error("❌ Module [{$module}] does not exist.");
             return Command::FAILURE;
         }
 
@@ -29,7 +29,7 @@ class MakeControllerCommand extends Command
         $filePath = $targetDir . '/' . $controllerName . '.php';
 
         if (File::exists($filePath)) {
-            $this->error("❌ El controlador [{$controllerName}] ya existe en el módulo [{$module}].");
+            $this->error("❌ Controller [{$controllerName}] already exists in module [{$module}].");
             return Command::FAILURE;
         }
 
@@ -44,7 +44,7 @@ class MakeControllerCommand extends Command
         );
 
         File::put($filePath, $content);
-        $this->info("✅ Controlador [{$controllerName}] creado en modules/{$module}/Controllers/");
+        $this->info("✅ Controller [{$controllerName}] created in modules/{$module}/Controllers/");
         return Command::SUCCESS;
     }
 }

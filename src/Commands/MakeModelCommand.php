@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 
 class MakeModelCommand extends Command
 {
-    protected $signature = 'module:model {module : Nombre del módulo} {name : Nombre del modelo} {--m|migration : Crear también la migración}';
-    protected $description = 'Crea un modelo dentro de un módulo específico';
+    protected $signature = 'module:model {module : Module name} {name : Model name} {--m|migration : Create a new migration file for the model}';
+    protected $description = 'Create a new model inside a specific module';
 
     public function handle(): int
     {
@@ -20,7 +20,7 @@ class MakeModelCommand extends Command
         $targetDir = $modulesDir . '/' . $module . '/Models';
 
         if (!File::isDirectory($modulesDir . '/' . $module)) {
-            $this->error("❌ El módulo [{$module}] no existe.");
+            $this->error("❌ Module [{$module}] does not exist.");
             return Command::FAILURE;
         }
 
@@ -28,7 +28,7 @@ class MakeModelCommand extends Command
         $filePath = $targetDir . '/' . $modelName . '.php';
 
         if (File::exists($filePath)) {
-            $this->error("❌ El modelo [{$modelName}] ya existe en el módulo [{$module}].");
+            $this->error("❌ Model [{$modelName}] already exists in module [{$module}].");
             return Command::FAILURE;
         }
 
@@ -41,7 +41,7 @@ class MakeModelCommand extends Command
         );
 
         File::put($filePath, $content);
-        $this->info("✅ Modelo [{$modelName}] creado en modules/{$module}/Models/");
+        $this->info("✅ Model [{$modelName}] created in modules/{$module}/Models/");
 
         if ($this->option('migration')) {
             $this->call('module:migration', [

@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 
 class MakeMigrationCommand extends Command
 {
-    protected $signature = 'module:migration {module : Nombre del módulo} {name : Nombre de la migración}';
-    protected $description = 'Crea una migración dentro de un módulo específico';
+    protected $signature = 'module:migration {module : Module name} {name : Migration name}';
+    protected $description = 'Create a new migration file inside a specific module';
 
     public function handle(): int
     {
@@ -20,7 +20,7 @@ class MakeMigrationCommand extends Command
         $targetDir = $modulesDir . '/' . $module . '/Migrations';
 
         if (!File::isDirectory($modulesDir . '/' . $module)) {
-            $this->error("❌ El módulo [{$module}] no existe.");
+            $this->error("❌ Module [{$module}] does not exist.");
             return Command::FAILURE;
         }
 
@@ -29,10 +29,10 @@ class MakeMigrationCommand extends Command
         $fileName = "{$timestamp}_{$rawName}.php";
         $filePath = $targetDir . '/' . $fileName;
 
-        $content = "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    public function up(): void\n    {\n        // Define tu tabla o cambios aquí\n    }\n\n    public function down(): void\n    {\n        // Revertir cambios\n    }\n};\n";
+        $content = "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    public function up(): void\n    {\n        // Define table columns or schema updates here\n    }\n\n    public function down(): void\n    {\n        // Reverse schema updates\n    }\n};\n";
 
         File::put($filePath, $content);
-        $this->info("✅ Migración creada en modules/{$module}/Migrations/{$fileName}");
+        $this->info("✅ Migration created in modules/{$module}/Migrations/{$fileName}");
         return Command::SUCCESS;
     }
 }

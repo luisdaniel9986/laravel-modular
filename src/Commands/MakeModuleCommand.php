@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 
 class MakeModuleCommand extends Command
 {
-    protected $signature = 'make:module {name : Nombre del módulo (ej. Productos)}';
-    protected $description = 'Crea un nuevo módulo con arquitectura modular completa (Daniel Alva)';
+    protected $signature = 'make:module {name : The name of the module (e.g. Products)}';
+    protected $description = 'Create a new modular architecture module (by Daniel Alva)';
 
     public function handle(): int
     {
@@ -19,13 +19,13 @@ class MakeModuleCommand extends Command
         $targetPath = $modulesDir . '/' . $module;
 
         if (File::isDirectory($targetPath)) {
-            $this->error("❌ El módulo [{$module}] ya existe en: {$targetPath}");
+            $this->error("❌ Module [{$module}] already exists at: {$targetPath}");
             return Command::FAILURE;
         }
 
-        $this->info("🚀 Creando módulo modular [{$module}] por Daniel Alva...");
+        $this->info("🚀 Generating module [{$module}] by Daniel Alva...");
 
-        // 1. Crear directorios
+        // 1. Create directory structure
         $folders = ['Controllers', 'Models', 'Migrations', 'Routes', 'Views', 'Requests'];
         foreach ($folders as $folder) {
             File::makeDirectory($targetPath . '/' . $folder, 0755, true);
@@ -35,7 +35,7 @@ class MakeModuleCommand extends Command
         $viewNamespace = strtolower($module);
         $routePrefix = Str::kebab($module);
 
-        // 2. Generar Controller
+        // 2. Generate Controller
         $controllerTemplate = File::get(__DIR__ . '/../Stubs/controller.stub');
         $controllerContent = str_replace(
             ['{{namespace}}', '{{class}}', '{{viewNamespace}}'],
@@ -44,7 +44,7 @@ class MakeModuleCommand extends Command
         );
         File::put($targetPath . "/Controllers/{$module}Controller.php", $controllerContent);
 
-        // 3. Generar Model
+        // 3. Generate Model
         $modelTemplate = File::get(__DIR__ . '/../Stubs/model.stub');
         $modelContent = str_replace(
             ['{{namespace}}', '{{class}}'],
@@ -53,13 +53,13 @@ class MakeModuleCommand extends Command
         );
         File::put($targetPath . "/Models/{$module}.php", $modelContent);
 
-        // 4. Generar Migración
+        // 4. Generate Migration
         $tableName = Str::snake(Str::pluralStudly($module));
         $timestamp = date('Y_m_d_His');
-        $migrationContent = "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    public function up(): void\n    {\n        Schema::create('{$tableName}', function (Blueprint \$table) {\n            \$table->id();\n            \$table->string('nombre')->nullable();\n            \$table->timestamps();\n        });\n    }\n\n    public function down(): void\n    {\n        Schema::dropIfExists('{$tableName}');\n    }\n};\n";
+        $migrationContent = "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    public function up(): void\n    {\n        Schema::create('{$tableName}', function (Blueprint \$table) {\n            \$table->id();\n            \$table->string('name')->nullable();\n            \$table->timestamps();\n        });\n    }\n\n    public function down(): void\n    {\n        Schema::dropIfExists('{$tableName}');\n    }\n};\n";
         File::put($targetPath . "/Migrations/{$timestamp}_create_{$tableName}_table.php", $migrationContent);
 
-        // 5. Generar Rutas Web
+        // 5. Generate Web Routes
         $routesWebTemplate = File::get(__DIR__ . '/../Stubs/routes-web.stub');
         $routesWebContent = str_replace(
             ['{{namespace}}', '{{class}}', '{{module}}', '{{routePrefix}}'],
@@ -68,7 +68,7 @@ class MakeModuleCommand extends Command
         );
         File::put($targetPath . '/Routes/web.php', $routesWebContent);
 
-        // 6. Generar Rutas API
+        // 6. Generate API Routes
         $routesApiTemplate = File::get(__DIR__ . '/../Stubs/routes-api.stub');
         $routesApiContent = str_replace(
             ['{{namespace}}', '{{class}}', '{{module}}', '{{routePrefix}}'],
@@ -77,15 +77,15 @@ class MakeModuleCommand extends Command
         );
         File::put($targetPath . '/Routes/api.php', $routesApiContent);
 
-        // 7. Generar Vista Blade inicial
+        // 7. Generate Blade View
         $viewTemplate = File::get(__DIR__ . '/../Stubs/view.stub');
         $viewContent = str_replace('{{module}}', $module, $viewTemplate);
         File::put($targetPath . '/Views/index.blade.php', $viewContent);
 
-        $this->info("✅ Módulo [{$module}] creado exitosamente en: modules/{$module}");
-        $this->line("👉 Rutas web disponibles en: /{$routePrefix}");
-        $this->line("👉 Rutas API disponibles en: /api/{$routePrefix}");
-        $this->line("👉 Vista lista para usar: view('{$viewNamespace}::index')");
+        $this->info("✅ Module [{$module}] successfully created at: modules/{$module}");
+        $this->line("👉 Web route ready at: /{$routePrefix}");
+        $this->line("👉 API route ready at: /api/{$routePrefix}");
+        $this->line("👉 Blade view ready: view('{$viewNamespace}::index')");
 
         return Command::SUCCESS;
     }

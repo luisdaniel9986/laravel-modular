@@ -3,25 +3,25 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Directorio de Módulos
+    | Modules Directory
     |--------------------------------------------------------------------------
-    | Aquí se define la ruta relativa o nombre de la carpeta donde residirán
-    | los módulos de la aplicación. Por defecto: 'modules' en la raíz.
+    | Define the base directory where your application modules reside.
+    | Default: 'modules' in the project root.
     */
     'modules_directory' => 'modules',
 
     /*
     |--------------------------------------------------------------------------
-    | Namespace base para los Módulos
+    | Base Modules Namespace
     |--------------------------------------------------------------------------
     */
     'modules_namespace' => 'Modules',
 
     /*
     |--------------------------------------------------------------------------
-    | Carga automática de componentes por módulo
+    | Component Auto-Discovery
     |--------------------------------------------------------------------------
-    | Puedes activar o desactivar qué elementos se descubren automáticamente.
+    | Enable or disable auto-registration for specific module components.
     */
     'auto_load' => [
         'routes'     => true,
