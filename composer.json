@@ -1,46 +1,53 @@
-﻿{
-    "name": "danielalva/laravel-modular",
-    "description": "Arquitectura modular profesional y ligera para Laravel creada por Daniel Alva",
-    "keywords": ["laravel", "modules", "modular", "architecture", "modular-monolith", "daniel-alva"],
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Daniel Alva (Luis Daniel Alva Lujan)",
-            "homepage": "https://www.linkedin.com/in/luis-daniel-alva-lujan/",
-            "role": "Creator & Lead Developer"
-        }
-    ],
-    "support": {
-        "issues": "https://github.com/luisdaniel9986/laravel-modular/issues",
-        "source": "https://github.com/luisdaniel9986/laravel-modular"
-    },
-    "require": {
-        "php": ">=8.2",
-        "illuminate/support": "^10.0|^11.0|^12.0",
-        "illuminate/console": "^10.0|^11.0|^12.0"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^8.0|^9.0|^10.0",
-        "phpunit/phpunit": "^10.0|^11.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "DanielAlva\\Modular\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "DanielAlva\\Modular\\Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "DanielAlva\\Modular\\ModularServiceProvider"
-            ]
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+{
+    "name":  "danielalva/laravel-modular",
+    "description":  "Arquitectura modular profesional y ligera para Laravel creada por Daniel Alva",
+    "keywords":  [
+                     "laravel",
+                     "modules",
+                     "modular",
+                     "architecture",
+                     "modular-monolith",
+                     "daniel-alva"
+                 ],
+    "type":  "library",
+    "license":  "MIT",
+    "authors":  [
+                    {
+                        "name":  "Daniel Alva (Luis Daniel Alva Lujan)",
+                        "homepage":  "https://www.linkedin.com/in/luis-daniel-alva-lujan/",
+                        "role":  "Creator \u0026 Lead Developer"
+                    }
+                ],
+    "support":  {
+                    "issues":  "https://github.com/luisdaniel9986/laravel-modular/issues",
+                    "source":  "https://github.com/luisdaniel9986/laravel-modular"
+                },
+    "require":  {
+                    "php":  "\u003e=8.2",
+                    "illuminate/support":  "^10.0|^11.0|^12.0|^13.0",
+                    "illuminate/console":  "^10.0|^11.0|^12.0|^13.0"
+                },
+    "require-dev":  {
+                        "orchestra/testbench":  "^8.0|^9.0|^10.0",
+                        "phpunit/phpunit":  "^10.0|^11.0"
+                    },
+    "autoload":  {
+                     "psr-4":  {
+                                   "DanielAlva\\Modular\\":  "src/"
+                               }
+                 },
+    "autoload-dev":  {
+                         "psr-4":  {
+                                       "DanielAlva\\Modular\\Tests\\":  "tests/"
+                                   }
+                     },
+    "extra":  {
+                  "laravel":  {
+                                  "providers":  [
+                                                    "DanielAlva\\Modular\\ModularServiceProvider"
+                                                ]
+                              }
+              },
+    "minimum-stability":  "dev",
+    "prefer-stable":  true
 }
