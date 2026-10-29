@@ -1,0 +1,17 @@
+﻿<?php
+
+namespace {{namespace}}\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class {{class}}Controller extends Controller
+{
+    /**
+     * Muestra la lista del recurso.
+     */
+    public function index()
+    {
+        return view('{{viewNamespace}}::index');
+    }
+}

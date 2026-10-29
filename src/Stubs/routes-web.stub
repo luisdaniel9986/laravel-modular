@@ -1,0 +1,14 @@
+﻿<?php
+
+use Illuminate\Support\Facades\Route;
+use {{namespace}}\Controllers\{{class}}Controller;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes - Módulo {{module}}
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('{{routePrefix}}')->name('{{routePrefix}}.')->group(function () {
+    Route::get('/', [{{class}}Controller::class, 'index'])->name('index');
+});

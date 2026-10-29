@@ -1,0 +1,14 @@
+﻿<?php
+
+use Illuminate\Support\Facades\Route;
+use {{namespace}}\Controllers\{{class}}Controller;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes - Módulo {{module}}
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('{{routePrefix}}')->group(function () {
+    Route::get('/', [{{class}}Controller::class, 'index']);
+});
